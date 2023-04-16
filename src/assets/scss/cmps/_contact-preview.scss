@@ -1,0 +1,21 @@
+.contact-preview-wrapper {
+
+    background-color: $clr5;
+    border-radius: 50px;
+
+    .contact-preview {
+        display: flex;
+        flex-grow: 1;
+        cursor: pointer;
+
+        img {
+            height: 1.5rem;
+        }
+
+        >h2 {
+            font-size: em(10px);
+            padding: 5px;
+        }
+
+    }
+}
