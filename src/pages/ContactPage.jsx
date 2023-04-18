@@ -1,52 +1,31 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { loadContacts, removeContact, setFilterBy } from '../store/actions/contact.actions'
+import { spendBalance } from '../store/actions/user.actions'
 
 import { ContactList } from '../cmps/ContactList'
 import { ContactFilter } from '../cmps/ContactFilter'
-import { ContactDetailsPage } from './ContactDetailsPage'
-import { contactService } from '../services/contact.service'
 
-export class ContactPage extends Component {
+class _ContactPage extends Component {
 
-    state = {
-        selectedContactId: null,
-        selectedContact: null,
-        contacts: null,
-        filterBy: { term: '' },
+    componentDidMount() {
+        this.props.loadContacts()
     }
 
-    async loadContacts() {
-        let contactList = await contactService.getContacts(this.state.filterBy)
-        this.setState({ contacts: contactList })
-    }
-
-    async componentDidMount() {
-        this.loadContacts()
-    }
-
-    onSelectContact = (contactId) => {
-        console.log('selected contact id:', contactId)
-        this.setState({ selectedContactId: contactId })
-    }
-
-    onSearch = (ev) => {
-        const keyword = ev.target.value
-        console.log(keyword)
-        this.setState({ filterBy: { term: keyword } })
-        this.loadContacts()
-    }
-
-    onBackToList = () => {
-        this.props.history.push('/contact')
+    onSearch = (filterBy) => {
+        this.props.setFilterBy(filterBy)
+        this.props.loadContacts()
     }
 
     render() {
-        if (!this.state.contacts) return <div>Loading...</div>
+        const { contacts, filterBy } = this.props
+        if (!contacts) return <div>Loading...</div>
 
         return (
             <section className='contact-page flex column'>
-                <ContactFilter onSearch={this.onSearch} filterBy={this.state.filterBy} />
-                <ContactList contacts={this.state.contacts} onSelectContact={this.onSelectContact} onBack={this.onBackToList}/>
+                <ContactFilter onSearch={this.onSearch} filterBy={filterBy} />
+                <ContactList contacts={contacts} />
                 <Link to={`/contact/edit/`} className='btn-add'>
                     <img src={require('../assets/imgs/plus.png')}/>
                 </Link>
@@ -54,3 +33,18 @@ export class ContactPage extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    contacts: state.contactModule.contacts,
+    filterBy: state.contactModule.filterBy
+})
+
+const mapDispatchToProps = {
+    loadContacts,
+    removeContact,
+    setFilterBy,
+    spendBalance
+}
+
+
+export const ContactPage = connect(mapStateToProps, mapDispatchToProps)(_ContactPage)

@@ -10,8 +10,10 @@ export class ContactFilter extends Component {
     }
     
     render() {
+        const {filterBy} = this.state
+        if(!filterBy) return
         return (
-            <input type="text" className='contact-filter' onChange={this.props.onSearch} placeholder="Search" />
+            <input type="text" value={filterBy.term} className='contact-filter' onChange={this.props.onSearch} placeholder="Search" />
         )
     }
 }
