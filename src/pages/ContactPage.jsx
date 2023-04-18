@@ -27,7 +27,7 @@ class _ContactPage extends Component {
                 <ContactFilter onSearch={this.onSearch} filterBy={filterBy} />
                 <ContactList contacts={contacts} />
                 <Link to={`/contact/edit/`} className='btn-add'>
-                    <img src={require('../assets/imgs/plus.png')}/>
+                    <img src={require('../assets/imgs/plus.png')} alt='icon'/>
                 </Link>
             </section>
         )

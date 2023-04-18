@@ -15,7 +15,7 @@ function App() {
             <section className="main-app">
                 <AppHeader />
 
-                <main className='main-section'>
+                <main className='main-section full'>
                     <Switch>
                         <Route exact path="/" component={HomePage} />
                         <Route exact path="/contact" component={ContactPage} />

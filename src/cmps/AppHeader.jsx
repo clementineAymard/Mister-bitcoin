@@ -1,34 +1,42 @@
 import { connect } from "react-redux";
-import { Link, NavLink, withRouter } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
+import { userService } from "../services/user.service";
+import { logout } from "../store/actions/user.actions";
 
 
 function _AppHeader(props) {
-
-    function onBack() {
-        props.history.goBack()
+    const logout = () => {
+        props.logout()
     }
+    const loggedInUser = props.loggedInUser
+    console.log(loggedInUser)
+    const userName = loggedInUser.name ? loggedInUser.name.split(' ').slice(0, 1)[0] : 'Signup'
 
-    const { name, balance } = props.loggedInUser
     return (
         <header className='app-header full'>
             <div>
-                <div>
-                    <span>Mister Bitcoin</span> | 
-                    <span> Hello {name}</span>
-                </div>                
-                
+                <NavLink exact to="/" >
+                    <div className="logo">
+                        Mister Bitcoin
+                    </div>
+                </NavLink>
+                <div className="user-details flex gap align-center">
+                    <img src={require('../assets/imgs/user.png')} alt='icon'></img>
+                    <span>{userName}</span> |
+                    <button onClick={logout}>Logout</button>
+                </div>
+
                 <nav className='header-nav'>
-                    <button className="back" onClick={onBack} >Back</button>
                     <NavLink exact to="/" >
-                        <img src={require('../assets/imgs/maison.png')}></img>
+                        <img src={require('../assets/imgs/maison.png')} alt='icon'></img>
                         <span>Home</span>
                     </NavLink>
                     <NavLink to="/contact">
-                        <img src={require('../assets/imgs/user.png')}></img>
+                        <img src={require('../assets/imgs/user.png')} alt='icon'></img>
                         <span>Contacts</span>
                     </NavLink>
                     <NavLink to="/statistics">
-                        <img src={require('../assets/imgs/statistics.png')}></img>
+                        <img src={require('../assets/imgs/statistics.png')} alt='icon'></img>
                         <span>Statistics</span>
                     </NavLink>
                 </nav>
@@ -40,5 +48,6 @@ function _AppHeader(props) {
 const mapStateToProps = (state) => ({
     loggedInUser: state.userModule.loggedInUser
 })
+const mapDispatchToProps = { logout }
 
-export const AppHeader = connect(mapStateToProps)(withRouter(_AppHeader))
+export const AppHeader = connect(mapStateToProps, mapDispatchToProps)(withRouter(_AppHeader))

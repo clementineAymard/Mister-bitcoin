@@ -1,10 +1,8 @@
+import { userService } from "../../services/user.service";
 
 
 const INITIAL_STATE = {
-    loggedInUser: {
-        name: 'Jorji',
-        balance: 100
-    }
+    loggedInUser: userService.getUser()
 }
 
 export function userReducer(state = INITIAL_STATE, action = {}) {
@@ -17,7 +15,9 @@ export function userReducer(state = INITIAL_STATE, action = {}) {
                 loggedInUser: { ...loggedInUser, balance: loggedInUser.balance - action.amount }
             }
 
-
+        case 'SET_USER': {
+            return { ...state, loggedInUser: { ...action.user } }
+        }
         default:
             return state;
     }

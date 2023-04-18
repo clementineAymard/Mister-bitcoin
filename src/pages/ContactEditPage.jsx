@@ -84,7 +84,7 @@ export class ContactEdit extends Component {
                     <button className='btn-save'>Save</button>
                 </form>
                 <button onClick={this.onRemoveContact}>
-                    <img src={require('../assets/imgs/delete.png')}/>
+                    <img src={require('../assets/imgs/delete.png')} alt='icon'/>
                 </button>
             </section>
         )

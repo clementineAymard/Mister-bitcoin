@@ -20,81 +20,23 @@
 @import "views/contact-details";
 
 // Components
+@import "cmps/app-header";
 @import "cmps/contact-preview";
 @import "cmps/contact-list";
 @import "cmps/contact-filter";
+@import "cmps/move-preview";
+@import "cmps/move-list";
+@import "cmps/signup";
 
 
 
 
 .main-app {
-    // min-height: 100vh;
     @include basic-layout;
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
-
-    .app-header {
-        @include basic-layout;
-        background-color: $clr6;
-        color: white;
-
-        >div {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-block: rem(5px);
-
-            >.header-nav {
-                display: flex;
-                gap: 2rem;
-
-                @include for-mobile-layout {
-                    gap: 1rem;
-
-                    span {
-                        display: none;
-                    }
-                }
-            }
-        }
-
-        button,
-        a {
-            background-color: transparent;
-            text-decoration: none;
-            border: none;
-            border-radius: 5px;
-            padding: rem(10px);
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            transition: ease-in-out 0.3s background-color, ease-in-out 0.3s color;
-
-            img {
-                width: 1.5rem;
-                height: 1.5rem;
-            }
-
-            &:hover {
-                background-color: $clr5;
-                color: $clr4;
-            }
-        }
-    }
-
+    
     .main-section {
+        @include basic-layout;
         margin-block: 1rem;
+
     }
-
-    // main {
-    //     flex-grow: 1;
-    //     width: 100%;
-    // }
-
-    // >footer {
-    //     background-color: #111;
-    //     color: white;
-    // }
 }

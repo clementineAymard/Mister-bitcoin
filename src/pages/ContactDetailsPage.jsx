@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { transferCoins } from '../store/actions/user.actions'
 import { contactService } from '../services/contact.service'
+import TransferFunds from '../cmps/TransferFunds'
+import { MoveList } from '../cmps/MoveList'
 
-export class ContactDetailsPage extends Component {
+export class _ContactDetailsPage extends Component {
 
     state = {
         contact: null
@@ -21,26 +25,49 @@ export class ContactDetailsPage extends Component {
         }
     }
 
-    // onBack = () => {
-    //     this.props.history.push('/contact')
-    // }
+    transferCoins = (amount, contact) => {
+        console.log('transfering coins')
+        this.props.transferCoins(amount, contact)
+    }
+
+    onBack = () => {
+        this.props.history.goBack()
+    }
 
     render() {
         const { contact } = this.state
+        const { user } = this.props
         if (!contact) return <div>Loading...</div>
+
         return (
-            <div className='contact-details'>
-                <h3>Name: {contact.name}</h3>
-                <h3>Email: {contact.email}</h3>
-                <h3>Phone: {contact.phone}</h3>
-                {/* <button onClick={this.onBack}>Back</button> */}
+            <section className='contact-details-section'>
+                <button className="btn-back" onClick={this.onBack} >Back</button>
 
-                <Link to={`/contact/edit/${contact._id}`}>
-                    <img src={require('../assets/imgs/edit.png')} />
-                </Link>
+                <div className='contact-details'>
+                    <div className='contact-info flex gap '>
+                        <img src={`https://robohash.org/${contact._id}?set=set5`} alt='icon'/>
+                        <div className='flex column gap'>
+                            <h3><span>Name:</span> {contact.name}</h3>
+                            <h3><span>Email:</span> {contact.email}</h3>
+                            <h3><span>Phone:</span> {contact.phone}</h3>
+                        </div>
+                    </div>
+                    <TransferFunds contact={contact} onTransfer={this.transferCoins} />
 
-                
-            </div>
+                    <Link to={`/contact/edit/${contact._id}`}>
+                        <img src={require('../assets/imgs/edit.png')} alt='icon'/>
+                    </Link>
+                </div>
+
+                <MoveList user={user}/>
+            </section>
         )
     }
 }
+const mapStateToProps = (state) => ({
+    user: state.userModule.loggedInUser
+})
+
+const mapDispatchToProps = { transferCoins }
+
+export const ContactDetailsPage = connect(mapStateToProps, mapDispatchToProps)(_ContactDetailsPage)
