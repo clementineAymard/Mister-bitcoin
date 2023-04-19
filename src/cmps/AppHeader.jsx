@@ -10,7 +10,7 @@ function _AppHeader(props) {
     }
     const loggedInUser = props.loggedInUser
     console.log(loggedInUser)
-    const userName = loggedInUser.name ? loggedInUser.name.split(' ').slice(0, 1)[0] : 'Signup'
+    const userName = 'x' //loggedInUser.name ? loggedInUser.name.split(' ').slice(0, 1)[0] : 'Signup'
 
     return (
         <header className='app-header full'>
